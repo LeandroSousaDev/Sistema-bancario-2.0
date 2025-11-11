@@ -9,10 +9,17 @@ def menu():
     4- Sair;
 
     Escolha uma opção: '''
+    
     return int(input(menu))
 
 def depositar(valor, saldo, historico):
-    if valor > 0:
+    # if not isinstance(valor, int):
+    #     raise ValueError("valor deve ser um numero")
+    
+    if valor < 0:
+        raise ValueError("valor de ser maior que zero")
+    
+    elif valor > 0:
         saldo += valor
         historico.append({
             "valor": valor,
@@ -20,17 +27,18 @@ def depositar(valor, saldo, historico):
             "Data": datetime.now()
         })
         print("\n Deposito realizado com sucesso")
-    else:
-        raise ValueError
 
     return saldo, historico
 
 def sacar(valor, saldo, limite, historico):
+    # if not isinstance(valor, int):
+    #     raise ValueError("valor deve ser um numero")
+    
     if valor > saldo:
-        raise ValueError
+        raise ValueError("Saldo insuficiente para esse valor")
 
     elif valor > limite:
-        raise ValueError
+        raise ValueError(f"essa conta tem o limite de saque de R${limite},00")
 
     elif valor > 0:
         saldo -= valor
@@ -40,8 +48,6 @@ def sacar(valor, saldo, limite, historico):
             "Data": datetime.now()
         })
         print("\n Saque realizado com sucesso")
-    else:
-        raise ValueError
 
     return saldo, historico
 
